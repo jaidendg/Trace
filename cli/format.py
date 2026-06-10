@@ -52,5 +52,5 @@ class Format:
         self.info("run <module> <args>    Run a module")
         self.info("modules                List all modules")
         self.info("clear / cls            Clear screen")
-        self.info("exit                   Exit framework")
+        self.info("exit / quit            Exit framework")
         self.info("help                   Show this help menu\n")
