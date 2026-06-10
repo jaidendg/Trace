@@ -13,11 +13,10 @@ class Shell:
         self.executor = Executor()
         self.running = True
 
+        self.fmt.clear()
         self.registry.load_modules()
 
     def start(self) -> None:
-        self.fmt.clear()
-
         while self.running:
             try:
                 action = self.fmt.input()
@@ -25,6 +24,8 @@ class Shell:
             except KeyboardInterrupt:
                 self.fmt.error("Exiting...\n")
                 self.running = False
+            except Exception as e:
+                self.fmt.error(f"Exception error: {e}")
 
     def handle(self, action: str) -> None:
         cmd = self.parser.user_input(action)
@@ -32,34 +33,43 @@ class Shell:
         if not cmd:
             return
 
-        name, args = cmd
-        if name == "run" and len(args) < 2:
-            self.fmt.error("Missing arguments.")
-            return
+        action, args = cmd
 
-        match (name):
+        match action:
             case "run":
-                module = self.registry.get_module(args[0])
-
-                if not module:
-                    self.fmt.error("Invalid module.")
+                if not args:
+                    self.fmt.error("Usage: run <module> <args>")
+                    return
+                
+                module_name = args[0]
+                module_args = args[1:]
+                if not module_args:
+                    self.fmt.error("Missing module arguments.")
                     return
 
-                result = self.executor.run(module, *args[1:])
+                module = self.registry.get_module(module_name)
+
+                if not module:
+                    self.fmt.error(f"Module '{module_name}' not found.")
+                    return
+
+                result = self.executor.run(module, *module_args)
                 self.parser.module_result(result)
 
             case "modules":
                 for module in self.registry.list_modules():
                     self.fmt.info(module["name"] + " - " + module["description"])
 
+                print()
+
             case "clear" | "cls":
                 self.fmt.clear()
 
-            case "exit":
+            case "exit" | "quit":
                 self.running = False
 
             case "help":
                 self.fmt.show_help()
 
             case _:
-                self.fmt.error("Invalid command.")
+                self.fmt.error(f"Invalid command: '{action}'")
