@@ -12,7 +12,6 @@ class Registry:
     def register_module(self, module: BaseModule) -> None:
         self.modules[module.name] = module
 
-    # thanks to whoever i stole this from
     def load_modules(self) -> None:
         for _, name, _ in pkgutil.iter_modules(modules.__path__):
             mod = importlib.import_module(f"modules.{name}")
