@@ -1,0 +1,14 @@
+{
+    "Github": {
+        "default": "https://github.com/",
+        "api": "https://api.github.com/users/"
+    },
+    "Minecraft": {
+        "default": "https://namemc.com/profile/",
+        "api": "https://api.mojang.com/users/profiles/minecraft/"
+    },
+    "Chess.com": {
+        "default": "https://www.chess.com/member/",
+        "api": "https://api.chess.com/pub/player/"
+    }
+}
