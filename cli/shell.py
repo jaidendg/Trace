@@ -28,21 +28,20 @@ class Shell:
                 self.fmt.error(f"Exception error: {e}")
 
     def handle(self, action: str) -> None:
-        cmd = self.parser.user_input(action)
+        cmd = self.parser.parse_input(action)
 
         if not cmd:
             return
 
-        action, args = cmd
-
-        match action:
+        match cmd.command:
             case "run":
-                if not args:
+                if not cmd.args:
                     self.fmt.error("Usage: run <module> <args>")
                     return
                 
-                module_name = args[0]
-                module_args = args[1:]
+                module_name = cmd.args[0]
+                module_args = cmd.args[1:]
+
                 if not module_args:
                     self.fmt.error("Missing module arguments.")
                     return
@@ -54,13 +53,11 @@ class Shell:
                     return
 
                 result = self.executor.run(module, *module_args)
-                self.parser.module_result(result)
+                self.parser.parse_result(result)
 
             case "modules":
-                for module in self.registry.list_modules():
-                    self.fmt.info(module["name"] + " - " + module["description"])
-
-                print()
+                modules = self.registry.list_modules()
+                self.fmt.display_modules(modules)
 
             case "clear" | "cls":
                 self.fmt.clear()

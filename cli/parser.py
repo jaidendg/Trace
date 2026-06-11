@@ -1,22 +1,25 @@
 from cli.format import Format, Colors
+from cli.command import Command
 
 
 class Parser:
     def __init__(self):
         self.fmt = Format()
 
-    def user_input(self, action: str) -> tuple | None:
-        cmd = action.strip()
-        if not cmd:
+    def parse_input(self, action: str) -> Command | None:
+        if not action or not action.strip():
             return None
 
-        parts = cmd.split()
-        name = parts[0].lower()
+        parts = action.strip().split()
+        if not parts:
+            return None
+
+        command = parts[0].lower()
         args = parts[1:]
 
-        return name, args
+        return Command(command=command, args=args)
     
-    def module_result(self, result: dict) -> None:
+    def parse_result(self, result: dict) -> None:
         if not result:
             return
         
@@ -25,6 +28,8 @@ class Parser:
             return
         
         result = result["result"]
+        if not result:
+            return
         
         if isinstance(result, list):
             for r in result:
