@@ -48,13 +48,14 @@ class Format:
         self._print(f"[{Colors.RED}-{Colors.RESET}]", message, **kwargs)
 
     def show_help(self) -> None:
-        self.info("Name                  Description")
-        self.info("-------------------   ---------------------")
-        self.info("run <module> <args>   Run a module")
-        self.info("modules               List all modules")
-        self.info("clear / cls           Clear screen")
-        self.info("exit / quit           Exit framework")
-        self.info("help                  Show this help menu\n")
+        self.info("Name                         Description")
+        self.info("-------------------          ---------------------")
+        self.info("run / use <module> <args>    Run a module.")
+        self.info("modules                      List all modules.")
+        self.info("info <module>                Gets info about a module.")
+        self.info("clear / cls                  Clear screen.")
+        self.info("exit / quit                  Exit framework.")
+        self.info("help                         Show this help menu.\n")
 
     def display_modules(self, modules: list) -> None:
         if not modules:

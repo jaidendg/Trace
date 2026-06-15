@@ -6,6 +6,7 @@ from core.base import BaseModule
 class UserSearchModule(BaseModule):
     name = "usersearch"
     description = "Searches username for social media accounts."
+    arguments = ["username"]
 
     async def request(self, client: httpx.AsyncClient, url: str) -> bool:
         try:

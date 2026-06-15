@@ -34,7 +34,7 @@ class Shell:
             return
 
         match cmd.command:
-            case "run":
+            case "run" | "use":
                 if not cmd.args:
                     self.fmt.error("Usage: run <module> <args>")
                     return
@@ -42,18 +42,46 @@ class Shell:
                 module_name = cmd.args[0]
                 module_args = cmd.args[1:]
 
-                if not module_args:
-                    self.fmt.error("Missing module arguments.")
-                    return
-
                 module = self.registry.get_module(module_name)
 
                 if not module:
                     self.fmt.error(f"Module '{module_name}' not found.")
                     return
 
+                if not module_args:
+                    self.fmt.error(f"Usage: {module.name} " + 
+                                   " ".join(f"<{a}>" for a in module.arguments))
+                    return
+
                 result = self.executor.run(module, *module_args)
                 self.parser.parse_result(result)
+
+            case "info":
+                if not cmd.args:
+                    self.fmt.error("Usage: info <module>")
+                    return
+                
+                module_name = cmd.args[0]
+                module = self.registry.get_module(module_name)
+
+                if not module:
+                    self.fmt.error(f"Module '{module_name}' not found.")
+                    return
+                
+                max_len = max(len(arg) for arg in module.arguments) + 6
+
+                self.fmt.info("Args" + " " * (max_len - 4) + "Description")
+                self.fmt.info("----" + " " * (max_len - 4) + "-----------")
+
+                if module.arguments:
+                    first_arg = module.arguments[0]
+                    spaces = " " * (max_len - len(first_arg))
+                    self.fmt.info(first_arg + spaces + module.description)
+
+                    for arg in module.arguments[1:]:
+                        self.fmt.info(arg)
+
+                print()
 
             case "modules":
                 modules = self.registry.list_modules()

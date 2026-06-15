@@ -1,48 +1,52 @@
-# Trace
+<div align="center">
 
-Trace is an OSINT framework written in Python.
+# 🕵️‍♂️ Trace
 
-The goal of Trace is to provide a lightweight, intelligence gathering, and information discovery through a simple command-line interface.
+**A lightweight Python OSINT framework for intelligence gathering.**
 
-> ⚠️ Trace is currently in early development and should be considered experimental.
-> APIs, commands, and module interfaces may change between releases.
+![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
+[![GitHub stars](https://img.shields.io/github/stars/jaidendg/trace)](https://github.com/jaidendg/trace/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/jaidendg/trace)](https://github.com/jaidendg/trace/issues)
+
+---
+
+Trace helps you collect publicly available information through an intuitive command-line interface.
+
+</div>
 
 ## Features
 
-* Sync and async module support
-* Dynamic module loading
-* Easy module development
+- **Dynamic module loading** -  Add new modules without changing core code
+- **Sync + Async** module support
+- **Clean CLI** with command history and helpful output
+
+> ⚠️ **Early Development** -  This project is still in active development. Things may change.
+
+## Preview
+
+![Trace Preview](assets/example.png)
 
 ## Installation
-
-Clone the repository:
 
 ```bash
 git clone https://github.com/jaidendg/trace.git
 cd trace
 ```
 
-Create a virtual environment:
+**Create virtual environment:**
 
 ```bash
+# Linux / macOS
 python -m venv venv
-```
-
-Activate it:
-
-Linux/macOS:
-
-```bash
 source venv/bin/activate
-```
 
-Windows:
-
-```powershell
+# Windows
+python -m venv venv
 venv\Scripts\activate
 ```
 
-Install dependencies:
+**Install dependencies:**
 
 ```bash
 pip install -r requirements.txt
@@ -50,39 +54,49 @@ pip install -r requirements.txt
 
 ## Usage
 
-Start Trace:
+Start the framework:
 
 ```bash
 python trace.py
 ```
 
-Example:
-
-![Example](assets/example.png)
-
-
 ## Creating Modules
 
-Modules inherit from `BaseModule`.
+Creating new modules in Trace is **very simple**.
 
-Example:
+### 1. Create a new file
+
+Go to `modules/` and create a new Python file (e.g. `example.py`).
+
+### 2. Example Module
 
 ```python
 from core.base import BaseModule
 
 class ExampleModule(BaseModule):
     name = "example"
-    description = "Example module"
+    description = "Example description"
+    arguments = ["target"]
 
     def run(self, target: str):
         return {"result": target}
 ```
 
+### Module Requirements
+
+| Field          | Required | Description |
+|----------------|----------|-----------|
+| `name`         | Yes      | Command name (lowercase) |
+| `description`  | Yes      | Brief description of module |
+| `arguments`    | Yes      | List of arguments (e.g. `["target"]`) |
+| `run()`        | Yes      | Main function that receives the arguments |
+
 ## Roadmap
 
-* More OSINT modules
-* Better argument parsing
-* Output formatting
-* Export results
+- More OSINT modules
+- Output formatting
+- Export results
 
----
+## Contributing
+
+Contributions are welcome! Feel free to open issues or submit pull requests.

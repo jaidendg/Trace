@@ -6,6 +6,7 @@ from core.base import BaseModule
 class WhoisModule(BaseModule):
     name = "whois"
     description = "Domain WHOIS information lookup."
+    arguments = ["domain"]
 
     def run(self, domain: str) -> dict:
         try:

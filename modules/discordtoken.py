@@ -6,6 +6,7 @@ from core.base import BaseModule
 class DiscordTokenModule(BaseModule):
     name = "discordtoken"
     description = "Gets information from a valid discord token."
+    arguments = ["token"]
 
     def run(self, token: str) -> dict:
         resp = httpx.get(

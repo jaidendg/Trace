@@ -6,9 +6,10 @@ from core.base import BaseModule
 class IpLookupModule(BaseModule):
     name = "iplookup"
     description = "Gets information from an IP address."
+    arguments = ["ip_address"]
 
-    def run(self, ip_addr: str):
-        resp = httpx.get(f"https://iplocate.io/api/lookup/{ip_addr}")
+    def run(self, ip_address: str):
+        resp = httpx.get(f"https://iplocate.io/api/lookup/{ip_address}")
 
         if resp.status_code != 200:
             return {"error": resp.text}

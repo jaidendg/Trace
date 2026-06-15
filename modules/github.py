@@ -6,6 +6,7 @@ from core.base import BaseModule
 class GithubModule(BaseModule):
     name = "github"
     description = "Finds email from github user."
+    arguments = ["username"]
 
     def run(self, username: str) -> dict:
         resp = httpx.get(f"https://api.github.com/users/{username}/repos")
