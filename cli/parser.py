@@ -39,10 +39,7 @@ class Parser:
             largest_len = max(len(name) for name in result)
 
             for name, value in result.items():
-                self.fmt.success(
-                name + " " * ((largest_len - len(name)) + 1) +
-                f"{Colors.CYAN}->{Colors.RESET} {value}"
-            )
+                self.fmt.success(f"{name:{largest_len}} {Colors.CYAN}->{Colors.RESET} {value}")
 
         elif isinstance(result, str):
             self.fmt.success(result)

@@ -70,13 +70,12 @@ class Shell:
                 
                 max_len = max(len(arg) for arg in module.arguments) + 6
 
-                self.fmt.info("Args" + " " * (max_len - 4) + "Description")
-                self.fmt.info("----" + " " * (max_len - 4) + "-----------")
+                self.fmt.info(f"{'Args':{max_len}}Description")
+                self.fmt.info(f"{'----':{max_len}}-----------")
 
                 if module.arguments:
                     first_arg = module.arguments[0]
-                    spaces = " " * (max_len - len(first_arg))
-                    self.fmt.info(first_arg + spaces + module.description)
+                    self.fmt.info(f"{first_arg:{max_len}}{module.description}")
 
                     for arg in module.arguments[1:]:
                         self.fmt.info(arg)

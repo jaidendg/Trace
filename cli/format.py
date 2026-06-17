@@ -63,12 +63,13 @@ class Format:
             return
         
         max_len = max(len(module["name"]) for module in  modules)
-        self.info("Name" + " " * (max_len - 4) + "   Description")
-        self.info("-" * max_len + "   " + "-" * 45)
+
+        self.info(f"{'Name':{max_len}}   Description")
+        self.info(f"{'-':-<{max_len}}   {'-' * 45}")
 
         for module in modules:
             name = module["name"]
             desc = module["description"]
-        
-            self.info(name + " " * (max_len - len(name)) + "   " + desc)
+            self.info(f"{name:{max_len}}   {desc}")
+
         print()
