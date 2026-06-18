@@ -17,9 +17,9 @@ Trace helps you collect publicly available information through an intuitive comm
 
 ## Features
 
-- **Dynamic module loading** -  Add new modules without changing core code
+- **Dynamic module & command loading**
 - **Sync + Async** module support
-- **Clean CLI** with command history and helpful output
+- **Clean CLI**
 
 > ⚠️ **Early Development** -  This project is still in active development. Things may change.
 
@@ -71,29 +71,64 @@ Go to `modules/` and create a new Python file (e.g. `example.py`).
 ### 2. Example Module
 
 ```python
-from core.base import BaseModule
+from core.base import Module
 
-class ExampleModule(BaseModule):
+class ExampleModule(Module):
     name = "example"
     description = "Example description"
 
-    def run(self, target: str):
-        return {"result": target}
+    def run(self, arg: str):
+        if ...:
+            return {"result": ...}
+        else:
+            return {"error": ...}
 ```
 
 ### Module Requirements
 
 | Field          | Required | Description |
 |----------------|----------|-----------|
-| `name`         | Yes      | Command name (lowercase) |
+| `name`         | Yes      | Module name (lowercase) |
 | `description`  | Yes      | Brief description of module |
-| `run()`        | Yes      | Main function that receives the arguments |
+| `run()`        | Yes      | Main function |
+
+## Creating Commands
+
+### 1. Create a new file
+
+Go to `commands/` and create a new Python file (e.g. `example.py`).
+
+### 2. Example Command
+
+```python
+from core.base import Command
+
+class ExampleCommand(Command):
+    name = "example"
+    description = "Example description"
+    aliases = []
+
+    @Command.execute
+    def run(self, arg: str):
+        return
+```
+
+### Command requirements
+
+| Field          | Required | Description |
+|----------------|----------|-----------|
+| `name`         | Yes      | Command name (lowercase) |
+| `description`  | Yes      | Brief description of command |
+| `aliases`      | No       | Aliases of the command
+| `run()`        | Yes      | Main function |
 
 ## Roadmap
 
 - More OSINT modules
 - Output formatting
 - Export results
+- Command to reload the registry
+- Guided input
 
 ## Contributing
 
