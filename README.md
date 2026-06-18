@@ -127,7 +127,6 @@ class ExampleCommand(Command):
 - More OSINT modules
 - Output formatting
 - Export results
-- Command to reload the registry
 - Guided input
 
 ## Contributing

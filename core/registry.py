@@ -17,8 +17,11 @@ class Registry:
         self.modules[module.name] = module
 
     def load_modules(self) -> None:
+        self.modules.clear()
+
         for _, name, _ in pkgutil.iter_modules(modules.__path__):
             mod = importlib.import_module(f"modules.{name}")
+            mod = importlib.reload(mod)
 
             for attr in dir(mod):
                 obj = getattr(mod, attr)
@@ -47,8 +50,11 @@ class Registry:
         self.commands[command.name] = command
 
     def load_commands(self) -> None:
+        self.commands.clear()
+
         for _, name, _ in pkgutil.iter_modules(commands.__path__):
             mod = importlib.import_module(f"commands.{name}")
+            mod = importlib.reload(mod)
 
             for attr in dir(mod):
                 obj = getattr(mod, attr)
