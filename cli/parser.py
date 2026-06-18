@@ -1,5 +1,5 @@
 from cli.format import Format, Colors
-from dataclasses import dataclass
+
 
 class Parser:
     def __init__(self):
