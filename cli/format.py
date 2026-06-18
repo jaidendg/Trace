@@ -46,30 +46,3 @@ class Format:
 
     def error(self, message: str, **kwargs) -> None:
         self._print(f"[{Colors.RED}-{Colors.RESET}]", message, **kwargs)
-
-    def show_help(self) -> None:
-        self.info("Name                         Description")
-        self.info("-------------------          ---------------------")
-        self.info("run / use <module> <args>    Run a module.")
-        self.info("modules                      List all modules.")
-        self.info("info <module>                Gets info about a module.")
-        self.info("clear / cls                  Clear screen.")
-        self.info("exit / quit                  Exit framework.")
-        self.info("help                         Show this help menu.\n")
-
-    def display_modules(self, modules: list) -> None:
-        if not modules:
-            self.warn("No modules loaded.")
-            return
-        
-        max_len = max(len(module["name"]) for module in  modules)
-
-        self.info(f"{'Name':{max_len}}   Description")
-        self.info(f"{'-':-<{max_len}}   {'-' * 45}")
-
-        for module in modules:
-            name = module["name"]
-            desc = module["description"]
-            self.info(f"{name:{max_len}}   {desc}")
-
-        print()

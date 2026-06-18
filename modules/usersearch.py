@@ -1,12 +1,11 @@
 import httpx
 import json
-from core.base import BaseModule
+from core.base import Module
 
 
-class UserSearchModule(BaseModule):
+class UserSearchModule(Module):
     name = "usersearch"
     description = "Searches username for social media accounts."
-    arguments = ["username"]
 
     async def request(self, client: httpx.AsyncClient, url: str) -> bool:
         try:

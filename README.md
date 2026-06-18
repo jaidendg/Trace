@@ -76,7 +76,6 @@ from core.base import BaseModule
 class ExampleModule(BaseModule):
     name = "example"
     description = "Example description"
-    arguments = ["target"]
 
     def run(self, target: str):
         return {"result": target}
@@ -88,7 +87,6 @@ class ExampleModule(BaseModule):
 |----------------|----------|-----------|
 | `name`         | Yes      | Command name (lowercase) |
 | `description`  | Yes      | Brief description of module |
-| `arguments`    | Yes      | List of arguments (e.g. `["target"]`) |
 | `run()`        | Yes      | Main function that receives the arguments |
 
 ## Roadmap

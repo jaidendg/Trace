@@ -1,19 +1,18 @@
 import httpx
 
-from core.base import BaseModule
+from core.base import Module
 
 
-class GithubModule(BaseModule):
+class GithubModule(Module):
     name = "github"
     description = "Finds email from github user."
-    arguments = ["username"]
 
     def run(self, username: str) -> dict:
         resp = httpx.get(f"https://api.github.com/users/{username}/repos")
         if resp.status_code != 200:
             return {"error": resp.text}
 
-        username_lower = username.lower()
+        username = username.lower()
         emails = []
 
         for repo in resp.json():
@@ -29,8 +28,10 @@ class GithubModule(BaseModule):
 
             commit = commits[0]
             author = commit["author"]
+            if not author:
+                continue
 
-            if author.get("login", "").lower() != username_lower:
+            if author.get("login", "").lower() != username:
                 continue
 
             emails.append(commit["commit"]["author"]["email"])

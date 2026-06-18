@@ -1,12 +1,11 @@
 import httpx
 
-from core.base import BaseModule
+from core.base import Module
 
 
-class DiscordTokenModule(BaseModule):
+class DiscordTokenModule(Module):
     name = "discordtoken"
     description = "Gets information from a valid discord token."
-    arguments = ["token"]
 
     def run(self, token: str) -> dict:
         resp = httpx.get(

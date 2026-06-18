@@ -1,12 +1,11 @@
 import whois
 
-from core.base import BaseModule
+from core.base import Module
 
 
-class WhoisModule(BaseModule):
+class WhoisModule(Module):
     name = "whois"
     description = "Domain WHOIS information lookup."
-    arguments = ["domain"]
 
     def run(self, domain: str) -> dict:
         try:

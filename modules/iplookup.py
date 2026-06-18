@@ -1,12 +1,11 @@
 import httpx
 
-from core.base import BaseModule
+from core.base import Module
 
 
-class IpLookupModule(BaseModule):
+class IpLookupModule(Module):
     name = "iplookup"
     description = "Gets information from an IP address."
-    arguments = ["ip_address"]
 
     def run(self, ip_address: str):
         resp = httpx.get(f"https://iplocate.io/api/lookup/{ip_address}")
