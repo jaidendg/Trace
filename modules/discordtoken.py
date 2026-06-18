@@ -7,7 +7,7 @@ class DiscordTokenModule(Module):
     name = "discordtoken"
     description = "Gets information from a valid discord token."
 
-    def run(self, token: str) -> dict:
+    def run(self, token: str):
         resp = httpx.get(
             "https://discord.com/api/v9/users/@me",
             headers = {"authorization": token}

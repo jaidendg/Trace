@@ -49,6 +49,11 @@ class Command(ABC):
         """ Returns a list of aliases for this command. """
         pass
 
+    @abstractmethod
+    def run(self, *args, **kwargs) -> None:
+        """ Execute the command. """
+        pass
+
     @staticmethod
     def execute(func):
         """ Decorator to execute commands with argument parsing. """

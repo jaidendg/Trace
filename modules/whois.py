@@ -7,7 +7,7 @@ class WhoisModule(Module):
     name = "whois"
     description = "Domain WHOIS information lookup."
 
-    def run(self, domain: str) -> dict:
+    def run(self, domain: str):
         try:
             data = whois.whois(domain)
 

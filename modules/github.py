@@ -7,7 +7,7 @@ class GithubModule(Module):
     name = "github"
     description = "Finds email from github user."
 
-    def run(self, username: str) -> dict:
+    def run(self, username: str):
         resp = httpx.get(f"https://api.github.com/users/{username}/repos")
         if resp.status_code != 200:
             return {"error": resp.text}

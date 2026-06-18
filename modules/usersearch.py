@@ -14,7 +14,7 @@ class UserSearchModule(Module):
         except:
             return False
 
-    async def run(self, username: str) -> dict:
+    async def run(self, username: str):
         with open("configs/user_search.json") as f:
             socials = json.load(f)
 
