@@ -6,7 +6,7 @@ from typing import Any, Optional
 
 @dataclass
 class Result:
-    """ Container for module results """
+    """ Container for module results. """
     data: Any = None
     error: Optional[Any] = None
 
@@ -33,8 +33,8 @@ class Module(ABC):
         return [param.name for param in sig.parameters.values() if param.name != "self"]
 
     @abstractmethod
-    def run(self, *args, **kwargs) -> dict:
-        """ Execute the module and return {'result': ...} or {'error': ...}. """
+    def run(self, *args, **kwargs) -> Result:
+        """ Execute the module and return Result(data=...) or Result(error=...). """
         pass
 
 
