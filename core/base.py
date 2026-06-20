@@ -1,5 +1,14 @@
 import inspect
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
+from typing import Any, Optional
+
+
+@dataclass
+class Result:
+    """ Container for module results """
+    data: Any = None
+    error: Optional[Any] = None
 
 
 class Module(ABC):

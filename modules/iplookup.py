@@ -1,6 +1,6 @@
 import httpx
 
-from core.base import Module
+from core.base import Module, Result
 
 
 class IpLookupModule(Module):
@@ -11,19 +11,17 @@ class IpLookupModule(Module):
         resp = httpx.get(f"https://iplocate.io/api/lookup/{ip_address}")
 
         if resp.status_code != 200:
-            return {"error": resp.text}
+            return Result(error=resp.text)
         
         data = resp.json()
         company = data.get("company")
         privacy = data.get("privacy")
 
-        return {
-            "result": {
+        return Result(data = {
                 "country": data.get("country"),
                 "state": data.get("state"),
                 "city": data.get("city"),
                 "provider": company.get("name"),
                 "VPN?": privacy.get("is_vpn"),
                 "proxy?": privacy.get("is_proxy")
-            }
-        }
+            })

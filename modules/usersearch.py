@@ -1,6 +1,6 @@
 import httpx
 import json
-from core.base import Module
+from core.base import Module, Result
 
 
 class UserSearchModule(Module):
@@ -27,4 +27,4 @@ class UserSearchModule(Module):
                 if await self.request(client, api_url):
                     valid[social] = data["default"] + username
 
-        return {"result": valid}
+        return Result(data=valid)

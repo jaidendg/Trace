@@ -1,4 +1,5 @@
 from cli.format import Format, Colors
+from core.base import Result
 
 
 class Parser:
@@ -18,27 +19,26 @@ class Parser:
 
         return command, args
     
-    def parse_result(self, result: dict) -> None:
+    def parse_result(self, result: Result) -> None:
         if not result:
             return
         
-        if "error" in result:
-            self.fmt.error(str(result["error"]))
+        if result.error:
+            self.fmt.error(str(result.error))
             return
         
-        result = result["result"]
-        if not result:
+        if not result.data:
             return
         
-        if isinstance(result, list):
-            for r in result:
+        if isinstance(result.data, list):
+            for r in result.data:
                 self.fmt.success(str(r))
 
-        elif isinstance(result, dict):
-            largest_len = max(len(name) for name in result)
+        elif isinstance(result.data, dict):
+            largest_len = max(len(name) for name in result.data.keys())
 
-            for name, value in result.items():
+            for name, value in result.data.items():
                 self.fmt.success(f"{name:{largest_len}} {Colors.CYAN}->{Colors.RESET} {value}")
 
         else:
-            self.fmt.success(str(result))
+            self.fmt.success(str(result.data))

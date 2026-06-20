@@ -1,6 +1,6 @@
 import whois
 
-from core.base import Module
+from core.base import Module, Result
 
 
 class WhoisModule(Module):
@@ -11,15 +11,13 @@ class WhoisModule(Module):
         try:
             data = whois.whois(domain)
 
-            return {
-                "result": {
+            return Result(data = {
                     "domain": domain,
                     "registrar": data.registrar,
-                    "creation_date": str(data.creation_date),
-                    "expiration_date": str(data.expiration_date),
-                    "name_servers": data.name_servers,
-                }
-            }
+                    "creation date": str(data.creation_date),
+                    "expiration date": str(data.expiration_date),
+                    "name servers": data.name_servers
+                })
 
         except Exception as e:
-            return {"error": str(e)}
+            return Result(error=e)

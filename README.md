@@ -71,7 +71,7 @@ Go to `modules/` and create a new Python file (e.g. `example.py`).
 ### 2. Example Module
 
 ```python
-from core.base import Module
+from core.base import Module, Result
 
 class ExampleModule(Module):
     name = "example"
@@ -79,9 +79,9 @@ class ExampleModule(Module):
 
     def run(self, arg: str):
         if ...:
-            return {"result": ...}
+            return Result(data="Example result")
         else:
-            return {"error": ...}
+            return Result(error="Example error")
 ```
 
 ### Module Requirements

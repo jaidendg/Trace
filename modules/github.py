@@ -1,6 +1,6 @@
 import httpx
 
-from core.base import Module
+from core.base import Module, Result
 
 
 class GithubModule(Module):
@@ -10,7 +10,7 @@ class GithubModule(Module):
     def run(self, username: str):
         resp = httpx.get(f"https://api.github.com/users/{username}/repos")
         if resp.status_code != 200:
-            return {"error": resp.text}
+            return Result(error=resp.text)
 
         username = username.lower()
         emails = []
@@ -36,4 +36,4 @@ class GithubModule(Module):
 
             emails.append(commit["commit"]["author"]["email"])
 
-        return {"result": emails}
+        return Result(data=emails)

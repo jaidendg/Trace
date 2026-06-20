@@ -1,6 +1,6 @@
 import httpx
 
-from core.base import Module
+from core.base import Module, Result
 
 
 class DiscordTokenModule(Module):
@@ -14,6 +14,6 @@ class DiscordTokenModule(Module):
         )
 
         if resp.status_code != 200:
-            return {"error": resp.text}
+            return Result(error=resp.text)
         
-        return {"result": resp.json()}
+        return Result(data=resp.json())
