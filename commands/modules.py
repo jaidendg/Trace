@@ -2,6 +2,10 @@ from core.base import Command
 from core.registry import Registry
 from cli.format import Format
 
+from rich.console import Console
+from rich.table import Table
+from rich import box
+
 
 class ModulesCommand(Command):
     name = "modules"
@@ -11,6 +15,7 @@ class ModulesCommand(Command):
     def __init__(self):
         self.registry = Registry()
         self.fmt = Format()
+        self.console = Console()
 
     @Command.execute
     def run(self):
@@ -19,16 +24,20 @@ class ModulesCommand(Command):
         if not modules:
             self.fmt.warn("No modules loaded.")
             return
-        
-        max_len = max(len(module["name"]) for module in  modules)
-        desc_len = max(len(module["description"]) for module in modules)
 
-        self.fmt.info(f"{'Name':{max_len}}   Description")
-        self.fmt.info(f"{'-':-<{max_len}}   {'-' * desc_len}")
+        table = Table(
+            title="Available Modules", 
+            title_style="bold cyan",
+            box=box.ROUNDED
+        )
+        table.add_column("Name", header_style="cyan")
+        table.add_column("Description", header_style="cyan")
 
         for module in modules:
             name = module["name"]
-            desc = module["description"]
-            self.fmt.info(f"{name:{max_len}}   {desc}")
-
-        print()
+            description = module["description"]
+            table.add_row(name, description)
+        
+        self.console.print()
+        self.console.print(table)
+        self.console.print()

@@ -1,10 +1,14 @@
 from cli.format import Format, Colors
 from core.base import Result
 
+from rich.console import Console
+from rich.tree import Tree
+
 
 class Parser:
     def __init__(self):
         self.fmt = Format()
+        self.console = Console()
 
     def parse_input(self, action: str) -> tuple[str, list[str]] | None:
         if not action or not action.strip():
@@ -31,8 +35,11 @@ class Parser:
             return
         
         if isinstance(result.data, list):
+            tree = Tree("[bold cyan]Results[/bold cyan]", guide_style="bold cyan")
             for r in result.data:
-                self.fmt.success(str(r))
+                tree.add(f"[bright_white]{r}[/bright_white]")
+            
+            self.console.print(tree)
 
         elif isinstance(result.data, dict):
             largest_len = max(len(name) for name in result.data.keys())

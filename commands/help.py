@@ -2,6 +2,10 @@ from core.base import Command
 from core.registry import Registry
 from cli.format import Format
 
+from rich.console import Console
+from rich.table import Table
+from rich import box
+
 
 class HelpCommand(Command):
     name = "help"
@@ -11,6 +15,7 @@ class HelpCommand(Command):
     def __init__(self):
         self.registry = Registry()
         self.fmt = Format()
+        self.console = Console()
 
     @Command.execute
     def run(self):
@@ -18,18 +23,20 @@ class HelpCommand(Command):
         if not commands:
             self.fmt.warn("No commands loaded.")
             return
-        
-        max_len = max((len(cmd["name"]) for cmd in commands), default=6)
-        alias_len = max((len(", ".join(cmd["aliases"])) for cmd in commands), default=7)
-        desc_len = max((len(cmd["description"]) for cmd in commands), default=11)
 
-        self.fmt.info(f"{'Command':{max_len}}   {'Aliases':{alias_len}}   Description")
-        self.fmt.info(f"{'-':-<{max_len}}   {'-':-<{alias_len}}   {'-' * desc_len}")
-    
+        table = Table(
+            title="Available Commands",
+            title_style="bold cyan",
+            box=box.ROUNDED
+        )
+        table.add_column("Command", header_style="cyan")
+        table.add_column("Aliases", header_style="cyan")
+        table.add_column("Description", header_style="cyan")
+
         for cmd in commands:
-            name = cmd["name"]
-            aliases = ", ".join(cmd["aliases"]) if cmd["aliases"] else ""
-            desc = cmd["description"]
-            self.fmt.info(f"{name:{max_len}}   {aliases:{alias_len}}   {desc}")
-    
-        print()
+            aliases = ", ".join(cmd["aliases"] if cmd["aliases"] else "")
+            table.add_row(cmd["name"], aliases, cmd["description"])
+
+        self.console.print()
+        self.console.print(table)
+        self.console.print()
