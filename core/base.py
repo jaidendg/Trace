@@ -61,8 +61,17 @@ class Command(ABC):
             sig = inspect.signature(func)
             params = list(sig.parameters.values())
 
-            if len(args) != len(params):
-                raise ValueError(f"Command Expected {len(params)} arguments, got {len(args)}.")
+            required_params = [
+                p for p in params 
+                if p.default == inspect.Parameter.empty 
+                and p.kind not in (
+                    inspect.Parameter.VAR_POSITIONAL, 
+                    inspect.Parameter.VAR_KEYWORD
+                )
+            ]
+
+            if len(args) < len(required_params):
+                raise ValueError(f"Command expected {len(required_params)} arguments, got {len(args)}.")
 
             return func(*args)
         return wrapper

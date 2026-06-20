@@ -22,6 +22,11 @@ class RunCommand(Command):
         if not module:
             self.fmt.error(f"Module '{module_name}' not found.")
             return
+
+        if not args:
+            self.fmt.warn(f"Usage: run {module.name} " + 
+                          " ".join(f"<{arg}>" for arg in module.arguments()))
+            return
         
         result = self.executor.run(module, *args)
         self.parser.parse_result(result)
