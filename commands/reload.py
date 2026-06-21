@@ -17,11 +17,10 @@ class ReloadCommand(Command):
         if target == "commands":
             self.registry.load_commands()
             self.fmt.success("Commands reloaded successfully.")
-            return
 
         elif target == "modules":
             self.registry.load_modules()
             self.fmt.success("Modules reloaded successfully.")
-            return
-
-        self.fmt.error("Invalid argument. Use 'commands' or 'modules'.")
+        
+        else:
+            self.fmt.error("Invalid argument. Use 'commands' or 'modules'.")

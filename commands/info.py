@@ -24,17 +24,17 @@ class InfoCommand(Command):
             self.fmt.error(f"Module '{module_name}' not found.")
             return
 
-        args = ", ".join(f"[bright_white]{arg}[/bright_white]" 
-                         for arg in module.arguments())
-
-        card_content = (
-            f"[bold cyan]Arguments:[/bold cyan] {args}\n\n"
-            f"[bold cyan]Description:[/bold cyan]\n[bright_white]{module.description}[/bright_white]"
-        )
+        args = ", ".join(arg for arg in module.arguments())
+        
+        content = "\n\n".join((
+            f"[bold cyan]Arguments:[/bold cyan] {args}",
+            f"[bold cyan]Description:[/bold cyan] "
+            f"[bright_White]{module.description}[/bright_white]"
+        ))
 
         self.console.print(
             Panel(
-                card_content,
+                content,
                 title=f"✗ [bold cyan]{module.name}[/bold cyan]",
                 title_align="left",
                 border_style="bright_white",
