@@ -73,7 +73,7 @@ class Registry:
             return cmd
         
         for cmd in self.commands.values():
-            if name in cmd.aliases:
+            if cmd.aliases and name in cmd.aliases:
                 cmd.registry = self
                 return cmd
 

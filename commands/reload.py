@@ -6,7 +6,6 @@ from cli.format import Format
 class ReloadCommand(Command):
     name = "reload"
     description = "Reloads all modules or commands."
-    aliases = []
 
     def __init__(self):
         self.registry = Registry()

@@ -9,7 +9,6 @@ from rich.panel import Panel
 class InfoCommand(Command):
     name = "info"
     description = "Show information about a module."
-    aliases = []
 
     def __init__(self):
         self.registry = Registry()

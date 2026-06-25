@@ -106,7 +106,7 @@ from core.base import Command
 class ExampleCommand(Command):
     name = "example"
     description = "Example description"
-    aliases = []
+    aliases = ["ex", "e"]
 
     @Command.execute
     def run(self, arg: str):
